@@ -21,5 +21,20 @@ class MotorcycleSercice {
     const updateById = await motorcycleODM.update(id, data);
     return this.createmotorcycle(updateById);
   }
+
+  public async getAll() {
+    const motorcycleODM = new MotorcycleODM();
+    const allMotorcycle = await motorcycleODM.getAll();
+    const allMotorcycleDomains = allMotorcycle
+      .map((motorcycle) => this.createmotorcycle(motorcycle));
+    return allMotorcycleDomains;
+  }
+
+  public async getById(id: string) {
+    const motorcycleODM = new MotorcycleODM();
+    const motorcycle = await motorcycleODM.findById(id);
+    if (!motorcycle) throw new Error('Motorcycle not found');
+    return motorcycle;
+  }
 }
 export default MotorcycleSercice;

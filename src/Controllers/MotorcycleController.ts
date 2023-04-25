@@ -46,5 +46,25 @@ class MotorcycleController {
       return this.res.status(422).json({ message: 'Invalid mongo id' });
     }
   }
+
+  public async getAll() {
+    try {
+      const allMotorcycle = await this.service.getAll();
+      return this.res.status(200).json(allMotorcycle);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async getById() {
+    const { id } = this.req.params;
+    try {
+      const motorcycle = await this.service.getById(id);
+      return this.res.status(200).json(motorcycle);
+    } catch (error) {
+      if (error instanceof Error) return this.res.status(404).json({ message: error.message });
+      this.next(error);
+    }
+  }
 }
 export default MotorcycleController;

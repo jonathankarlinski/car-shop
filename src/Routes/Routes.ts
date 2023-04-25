@@ -29,4 +29,15 @@ routes.put(
   (req, res, next) => new MotorcycleController(req, res, next).update(),
 );
 
+routes.get(
+  '/motorcycles',
+  (req, res, next) => new MotorcycleController(req, res, next).getAll(),
+);
+
+routes.get(
+  '/motorcycles/:id',
+  ValidateID.validate,
+  (req, res, next) => new MotorcycleController(req, res, next).getById(),
+);
+
 export default routes;
