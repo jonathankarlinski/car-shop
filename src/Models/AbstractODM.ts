@@ -1,17 +1,31 @@
-import { Model, model, models, Schema } from 'mongoose';
+import { Model, Schema, models,
+  model, isValidObjectId, UpdateQuery } from 'mongoose';
 
-export default abstract class AbstractODM<T> {
-  private schema: Schema<T>;
-  private _model: Model<T>;
-  private modelName: string;
+abstract class AbstractODM<T> {
+  protected model: Model<T>;
+  private schema: Schema;
+  protected modelName: string;
 
-  constructor(schema: Schema<T>, modelName: string) {
+  constructor(schema: Schema, modelName: string) {
     this.schema = schema;
     this.modelName = modelName;
-    this._model = models[this.modelName] || model(this.modelName, this.schema);
+    this.model = models[this.modelName] || model(modelName, this.schema);
   }
 
-  protected get model(): Model<T> {
-    return this._model;
+  public async create(obj: T): Promise<T> {
+    return this.model.create({ ...obj });
+  }
+
+  public async update(id: string, obj: Partial<T>):
+  Promise<T | null> {
+    if (!isValidObjectId(id)) throw Error('Invalid Mongo id');
+    
+    return this.model.findByIdAndUpdate(
+      { _id: id },
+      { ...obj } as UpdateQuery<T>,
+      { new: true },
+    );   
   }
 }
+
+export default AbstractODM;
