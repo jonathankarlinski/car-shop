@@ -27,6 +27,29 @@ describe('Testes da service de Car', function () {
     seatsQty: 5,
   };
 
+  const carList = [
+    {
+      id: '64487f431852311ef2e534b3',
+      model: 'Gol bolinha',
+      year: 2000,
+      color: 'Black',
+      status: true,
+      buyValue: 15.000,
+      doorsQty: 2,
+      seatsQty: 5,
+    },
+    {
+      id: '64457z441862712ff2e534b2',
+      model: 'Opala',
+      year: 1992,
+      color: 'White',
+      status: true,
+      buyValue: 25.000,
+      doorsQty: 2,
+      seatsQty: 5,
+    },
+  ];
+
   it('Deve cadastrar um carro com sucesso', async function () {
     Sinon.stub(Model, 'create').resolves(carInput);
 
@@ -36,13 +59,20 @@ describe('Testes da service de Car', function () {
     expect(result).to.be.deep.equal(carInput);
   });
 
-  it('Acha um carro com um id específico', async function () {
+  it('Retorna um carro com um id específico', async function () {
     Sinon.stub(Model, 'findById').resolves(carInput);
 
     const service = new CarService();
     const result = await service.getById('6348513f34c397abcad040b2');
 
     expect(result).to.be.deep.equal(carInput);
+  });
+
+  it('Retorna uma lista de carros', async function () {
+    Sinon.stub(Model, 'find').resolves(carList);
+    const service = new CarService();
+    const result = await service.getAll();
+    expect(result).to.be.deep.equal(carList);
   });
 
   afterEach(function () {
