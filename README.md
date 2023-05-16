@@ -1,4 +1,4 @@
-# Projeto CarShop
+# Projeto Car Shop
 
 Nesse projeto foi desenvolvida uma API para gerenciar uma concessionária de veículos, utilizando o banco de dados MongoDB através do framework Mongoose. Foram aplicados os princípios de Programação Orientada a Objetos (POO).
 
