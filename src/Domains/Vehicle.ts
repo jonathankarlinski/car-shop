@@ -1,11 +1,11 @@
 import IVehcle from '../Interfaces/IVehicle';
 
 class Vehicle {
-  protected id?: string | undefined;
+  protected id?: string;
   protected model: string;
   protected year: number;
   protected color: string;
-  private status?: boolean | undefined;
+  private status?: boolean;
   protected buyValue: number;
   
   constructor(vehicleParameters: IVehcle) {
