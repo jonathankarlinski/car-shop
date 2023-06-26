@@ -2,13 +2,14 @@ FROM node:16.14
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json .
+COPY package-lock.json .
 
-RUN ["npm", "i"] 
+RUN npm install
 
 COPY . .
 
-RUN chown node:node /app
+RUN chown -R node:node /app
 
 USER node
 
