@@ -5,9 +5,12 @@ WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
 
-RUN npm install
+RUN npm install --ignore-scripts
 
-COPY . .
+COPY package.json .
+COPY package-lock.json .
+COPY src/ ./src/
+COPY public/ ./public/
 
 RUN chown -R node:node /app
 
